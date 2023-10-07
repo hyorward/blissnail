@@ -1,5 +1,5 @@
 from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types import ReplyKeyboardMarkup
+from aiogram.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 from dotenv import load_dotenv
 import os
 
@@ -17,6 +17,18 @@ markup_admin.add('Каталог 🗂').add('Корзина 🗑').add('Конт
 admin_panel = ReplyKeyboardMarkup(resize_keyboard=True)
 admin_panel.add('Добавить услугу').add('Удалить услугу').add('Изменить услугу').add('Сделать рассылку')
 
+catalog_list = InlineKeyboardMarkup(row_width=1)
+catalog_list.add(InlineKeyboardButton(text='МАНИКЮР (АППАРАТ,КОМБИ,КЛАССИКА) БЕЗ ПОКРЫТИЯ НОГТЕЙ', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='МАНИКЮР + ПОКРЫТИЕ ГЕЛЬ-ЛАК', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='СНЯТИЕ ГЕЛЬ-ЛАКА', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='МАНИКЮР + СНЯТИЕ + ПОКРЫТИЕ ГЕЛЬ-ЛАК', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='ФРАНЦУЗСКИЙ МАНИКЮР ГЕЛЬ-ЛАК + МАНИКЮР', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='ПОКРЫТИЕ НОГТЕЙ ЛАКОМ', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='СНЯТИЕ ЛАКА С НОГТЕЙ', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='НАРАЩИВАНИЕ НОГТЕЙ, КОРОТКИЕ / ДЛИННЫЕ', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='НАРАЩИВАНИЕ НОГТЕЙ (ФРАНЦУЗСКИЙ МАНИКЮР), КОРОТКИЕ / ДЛИННЫЕ', url='https://milou-salon.ru/'),
+                 InlineKeyboardButton(text='НАРАЩИВАНИЕ 1 НОГОТЬ', url='https://milou-salon.ru/'))
+
 
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
@@ -33,7 +45,7 @@ async def admin_id(message: types.Message):
 
 @dp.message_handler(text='Каталог 🗂')
 async def catalog(message: types.Message):
-    await message.answer(f'<em>В данный момент каталог пуст(</em>', parse_mode="html")
+    await message.answer(f'<em>В данный момент каталог пуст(</em>', parse_mode="html", reply_markup=catalog_list)
 
 
 @dp.message_handler(text='Корзина 🗑')
